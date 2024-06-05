@@ -1,0 +1,262 @@
+{%extends 'core/base.html'%}
+{%load static%}
+{%block content%}
+<style>
+h1,h2,h3,h4,h5,h6{
+text-align:center;
+
+}
+    table, th, td {
+  border: 1px solid black;
+  padding: 5px;
+}
+    th{
+    background-color:#c6eff3;
+
+    }
+    td {
+    width:200px;
+    height:150px;
+    vertical-align: baseline;
+
+    }
+</style>
+
+<div style="width:95%; margin-left:auto;margin-right:auto">
+    <h4 style="text-align:center"><img src="{% static 'images/dietas.png'%}" height="50px"> Editar dieta</h4>
+    <br>
+    <br>
+
+    <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+        <h6>Nombre de la dieta:</h6>
+        {{form.nombre.errors}}{{form.nombre}}
+        <br>
+        <h5 style="text-align:center"> Dieta Semana 1</h5>
+        <table>
+            <tr>
+                <th>Lunes</th>
+                <th>Martes</th>
+                <th>Miércoles</th>
+                <th>Jueves</th>
+                <th>Viernes</th>
+                <th>Sábado</th>
+                <th>Domingo</th>
+            </tr>
+            <tr>
+
+            </tr>
+            <tr>
+                <td>Desayuno 1:
+                    {{form.desayuno1}}</td>
+                <td>Desayuno 2:
+                    {{form.desayuno2}}</td>
+                <td>Desayuno 3: {{form.desayuno3}}</td>
+                <td>Desayuno:</td>
+                <td>Desayuno:</td>
+                <td>Desayuno:</td>
+                <td>Desayuno:</td>
+
+            </tr>
+            <tr>
+                <td>Media mañana:{{form.dia1_media_manana}}</td>
+                <td>Media mañana:{{form.dia2_media_manana}}</td>
+                <td>Media mañana:{{form.dia3_media_manana}}</td>
+                <td>Media mañana:{{form.dia4_media_manana}}</td>
+                <td>Media mañana:{{form.dia5_media_manana}}</td>
+                <td>Media mañana:{{form.dia6_media_manana}}</td>
+                <td>Media mañana:{{form.dia7_media_manana}}</td>
+
+            </tr>
+            <tr>
+                <td>almuerzo primer plato:{{form.dia1_almuerzo1}}</td>
+                <td>almuerzo primer plato:{{form.dia2_almuerzo1}}</td>
+                <td>almuerzo primer plato:{{form.dia3_almuerzo1}}</td>
+                <td>almuerzo primer plato:{{form.dia4_almuerzo1}}</td>
+                <td>almuerzo primer plato:{{form.dia5_almuerzo1}}</td>
+                <td>almuerzo primer plato:{{form.dia6_almuerzo1}}</td>
+                <td>almuerzo primer plato:{{form.dia7_almuerzo1}}</td>
+
+            </tr>
+            <tr>
+                <td>almuerzo segundo plato:{{form.dia1_almuerzo2}}</td>
+                <td>almuerzo segundo plato:{{form.dia2_almuerzo2}}</td>
+                <td>almuerzo segundo plato:{{form.dia3_almuerzo2}}</td>
+                <td>almuerzo segundo plato:{{form.dia4_almuerzo2}}</td>
+                <td>almuerzo segundo plato:{{form.dia5_almuerzo2}}</td>
+                <td>almuerzo segundo plato:{{form.dia6_almuerzo2}}</td>
+                <td>almuerzo segundo plato:{{form.dia7_almuerzo2}}</td>
+
+            </tr>
+            <tr>
+                <td>Postre almuerzo:{{form.dia1_postre_almuerzo}}</td>
+                <td>Postre almuerzo:{{form.dia2_postre_almuerzo}}</td>
+                <td>Postre almuerzo:{{form.dia3_postre_almuerzo}}</td>
+                <td>Postre almuerzo:{{form.dia4_postre_almuerzo}}</td>
+                <td>Postre almuerzo:{{form.dia5_postre_almuerzo}}</td>
+                <td>Postre almuerzo:{{form.dia6_postre_almuerzo}}</td>
+                <td>Postre almuerzo:{{form.dia7_postre_almuerzo}}</td>
+
+            </tr>
+            <tr>
+                <td>Merienda:{{form.dia1_merienda}}</td>
+                <td>Merienda:{{form.dia2_merienda}}</td>
+                <td>Merienda:{{form.dia3_merienda}}</td>
+                <td>Merienda:{{form.dia4_merienda}}</td>
+                <td>Merienda:{{form.dia5_merienda}}</td>
+                <td>Merienda:{{form.dia6_merienda}}</td>
+                <td>Merienda:{{form.dia7_merienda}}</td>
+
+            </tr>
+
+            <tr>
+                <td>Cena primer plato:{{form.dia1_cena1}}</td>
+                <td>Cena primer plato:{{form.dia2_cena1}}</td>
+                <td>Cena primer plato:{{form.dia3_cena1}}</td>
+                <td>Cena primer plato:{{form.dia4_cena1}}</td>
+                <td>Cena primer plato:{{form.dia5_cena1}}</td>
+                <td>Cena primer plato:{{form.dia6_cena1}}</td>
+                <td>Cena primer plato:{{form.dia7_cena1}}</td>
+
+            </tr>
+            <tr>
+                <td>Cena segundo plato:{{form.dia1_cena2}}</td>
+                <td>Cena segundo plato:{{form.dia2_cena2}}</td>
+                <td>Cena segundo plato:{{form.dia3_cena2}}</td>
+                <td>Cena segundo plato:{{form.dia4_cena2}}</td>
+                <td>Cena segundo plato:{{form.dia5_cena2}}</td>
+                <td>Cena segundo plato:{{form.dia6_cena2}}</td>
+                <td>Cena segundo plato:{{form.dia7_cena2}}</td>
+
+            </tr>
+            <tr>
+                <td>Postre cena:{{form.dia1_postre_cena}}</td>
+                <td>Postre cena:{{form.dia2_postre_cena}}</td>
+                <td>Postre cena:{{form.dia3_postre_cena}}</td>
+                <td>Postre cena:{{form.dia4_postre_cena}}</td>
+                <td>Postre cena:{{form.dia5_postre_cena}}</td>
+                <td>Postre cena:{{form.dia6_postre_cena}}</td>
+                <td>Postre cena:{{form.dia7_postre_cena}}</td>
+
+            </tr>
+        </table>
+        <br>
+        <h5>Dieta Semana 2</h5>
+        <table>
+            <tr>
+                <th>Lunes</th>
+                <th>Martes</th>
+                <th>Miércoles</th>
+                <th>Jueves</th>
+                <th>Viernes</th>
+                <th>Sábado</th>
+                <th>Domingo</th>
+            </tr>
+            <tr>
+
+            </tr>
+            <tr>
+                <td>Desayuno:</td>
+                <td>Desayuno:</td>
+                <td>Desayuno:</td>
+                <td>Desayuno:</td>
+                <td>Desayuno:</td>
+                <td>Desayuno:</td>
+                <td>Desayuno:</td>
+
+            </tr>
+            <tr>
+                <td>Media mañana:{{form.dia1b_media_manana}}</td>
+                <td>Media mañana:{{form.dia2b_media_manana}}</td>
+                <td>Media mañana:{{form.dia3b_media_manana}}</td>
+                <td>Media mañana:{{form.dia4b_media_manana}}</td>
+                <td>Media mañana:{{form.dia5b_media_manana}}</td>
+                <td>Media mañana:{{form.dia6b_media_manana}}</td>
+                <td>Media mañana:{{form.dia7b_media_manana}}</td>
+
+            </tr>
+            <tr>
+                <td>almuerzo primer plato:{{form.dia1b_almuerzo1}}</td>
+                <td>almuerzo primer plato:{{form.dia2b_almuerzo1}}</td>
+                <td>almuerzo primer plato:{{form.dia3b_almuerzo1}}</td>
+                <td>almuerzo primer plato:{{form.dia4b_almuerzo1}}</td>
+                <td>almuerzo primer plato:{{form.dia5b_almuerzo1}}</td>
+                <td>almuerzo primer plato:{{form.dia6b_almuerzo1}}</td>
+                <td>almuerzo primer plato:{{form.dia7b_almuerzo1}}</td>
+
+            </tr>
+            <tr>
+                <td>almuerzo segundo plato:{{form.dia1b_almuerzo2}}</td>
+                <td>almuerzo segundo plato:{{form.dia2b_almuerzo2}}</td>
+                <td>almuerzo segundo plato:{{form.dia3b_almuerzo2}}</td>
+                <td>almuerzo segundo plato:{{form.dia4b_almuerzo2}}</td>
+                <td>almuerzo segundo plato:{{form.dia5b_almuerzo2}}</td>
+                <td>almuerzo segundo plato:{{form.dia6b_almuerzo2}}</td>
+                <td>almuerzo segundo plato:{{form.dia7b_almuerzo2}}</td>
+
+            </tr>
+            <tr>
+                <td>Postre almuerzo:{{form.dia1b_postre_almuerzo}}</td>
+                <td>Postre almuerzo:{{form.dia2b_postre_almuerzo}}</td>
+                <td>Postre almuerzo:{{form.dia3b_postre_almuerzo}}</td>
+                <td>Postre almuerzo:{{form.dia4b_postre_almuerzo}}</td>
+                <td>Postre almuerzo:{{form.dia5b_postre_almuerzo}}</td>
+                <td>Postre almuerzo:{{form.dia6b_postre_almuerzo}}</td>
+                <td>Postre almuerzo:{{form.dia7b_postre_almuerzo}}</td>
+
+            </tr>
+            <tr>
+                <td>Merienda:{{form.dia1b_merienda}}</td>
+                <td>Merienda:{{form.dia2b_merienda}}</td>
+                <td>Merienda:{{form.dia3b_merienda}}</td>
+                <td>Merienda:{{form.dia4b_merienda}}</td>
+                <td>Merienda:{{form.dia5b_merienda}}</td>
+                <td>Merienda:{{form.dia6b_merienda}}</td>
+                <td>Merienda:{{form.dia7b_merienda}}</td>
+
+            </tr>
+
+            <tr>
+                <td>Cena primer plato:{{form.dia1b_cena1}}</td>
+                <td>Cena primer plato:{{form.dia2b_cena1}}</td>
+                <td>Cena primer plato:{{form.dia3b_cena1}}</td>
+                <td>Cena primer plato:{{form.dia4b_cena1}}</td>
+                <td>Cena primer plato:{{form.dia5b_cena1}}</td>
+                <td>Cena primer plato:{{form.dia6b_cena1}}</td>
+                <td>Cena primer plato:{{form.dia7b_cena1}}</td>
+
+            </tr>
+            <tr>
+                <td>Cena segundo plato:{{form.dia1b_cena2}}</td>
+                <td>Cena segundo plato:{{form.dia2b_cena2}}</td>
+                <td>Cena segundo plato:{{form.dia3b_cena2}}</td>
+                <td>Cena segundo plato:{{form.dia4b_cena2}}</td>
+                <td>Cena segundo plato:{{form.dia5b_cena2}}</td>
+                <td>Cena segundo plato:{{form.dia6b_cena2}}</td>
+                <td>Cena segundo plato:{{form.dia7b_cena2}}</td>
+
+            </tr>
+            <tr>
+                <td>Postre cena:{{form.dia1b_postre_cena}}</td>
+                <td>Postre cena:{{form.dia2b_postre_cena}}</td>
+                <td>Postre cena:{{form.dia3b_postre_cena}}</td>
+                <td>Postre cena:{{form.dia4b_postre_cena}}</td>
+                <td>Postre cena:{{form.dia5b_postre_cena}}</td>
+                <td>Postre cena:{{form.dia6b_postre_cena}}</td>
+                <td>Postre cena:{{form.dia7b_postre_cena}}</td>
+
+            </tr>
+        </table>
+        <br>
+        <h5>Descripción:</h5>
+        {{form.descripcion}}
+        <div style="text-align:center">
+            <br>
+            <input style="width:50%" type="submit" class="btn btn-success" value="Crear nueva dieta">
+        </div>
+    </form>
+    <br>
+    <br>
+    <br>
+</div>
+
+{%endblock%}

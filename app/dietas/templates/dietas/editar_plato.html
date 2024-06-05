@@ -1,0 +1,33 @@
+{%extends 'core/base.html'%}
+{%load static%}
+{%block content%}
+
+<div style="width:70%; margin-left:auto;margin-right:auto">
+    <h4 style="text-align:center"><img src="{% static 'images/platos.png'%}" height="50px"> Editar plato</h4>
+    <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+        {{form}}
+        <br>
+        <div style="text-align:center">
+            <br>
+            <input style="width:30%" type="submit" class="btn btn-warning" value="Editar plato">
+            <button style="width:30%" type="button" class="btn btn-danger" onclick="borrar()" value="borrar plato">Borrar plato</button>
+
+        </div>
+    </form>
+    <br>
+    <br>
+    <br>
+    <div>
+        <h5>Tipos de representaciones:</h5>
+        {%for representacion in representaciones%} <img style="margin-left:3%;" src="{{representacion.imagen.url}}" alt="{{representacion.nombre}}" title="{{representacion.nombre}}" width="70">{%endfor%}
+    </div>
+</div>
+<script>
+    function borrar(){
+        var r = confirm("¿Estás seguro que deseas borrar este plato?")
+        if (r == true) {
+            window.location.href = '{%url 'borrar_plato' plato.pk%}';
+        }
+    };
+</script>
+{%endblock%}

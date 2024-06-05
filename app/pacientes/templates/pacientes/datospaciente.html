@@ -1,0 +1,209 @@
+{%extends 'core/base.html'%}
+{%load static%}
+{%block content%}
+<style>
+    h1,h2,h3,h4,h5,h6 {
+    text-align:center;
+    }
+
+
+#recuadro {
+  margin-left: 2%;
+  margin-right: 2%;
+  width:95%;
+  padding:10px;
+  }
+
+td{
+ max-width:500px;
+
+}
+.sidenav {
+  height: 100%; /* Full-height: remove this if you want "auto" height */
+  width: 160px; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 100px; /* Stay at the top */
+  left: 0;
+  background-color: #111; /* Black */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 20px;
+}
+
+/* The navigation menu links */
+.sidenav a {
+  margin:5%;
+  padding: 35px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #818181;
+  display: block;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+/* Style page content */
+.main {
+  margin-left: 160px; /* Same as the width of the sidebar */
+  padding: 0px 10px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+</style>
+<div class="sidenav">
+    <p style="color:white;margin-left:5%; font-size: margin-bottom:100px">{{paciente.nombre}} {{paciente.apellidos}}</p>
+    <a href="#"> <img height="25" src="{%static 'images/descriptioniconblanco.png'%}"> Datos personales</a>
+    <a href="#mediciones"> <img width="25" src="{%static 'images/pesoblanco.png'%}"> Datos consultas</a>
+    <a href="#grafica"> <img width="25" src="{%static 'images/grafica.png'%}"> Gráfica peso</a>
+    <a href="#nuevamedicion"> <img width="25" src="{%static 'images/cintablanco.png'%}"> Nueva consulta</a>
+
+</div>
+<br>
+<br>
+<div class="contenidolateral" style="margin-left:160px">
+<h4 id="datospersonales"><img src="{% static 'images/person.png'%}" height="50px"> {{paciente.nombre}} {{paciente.apellidos}}</h4>
+<br>
+<div id="recuadro">
+    <h5 style="text-align:left;"><img src="{% static 'images/descriptionicon.png'%}" height="50px"> Datos personales</h5>
+    <br>
+    <br>
+    <table style="min-width:800px">
+        <tr>
+            <td><b>Fecha de nacimiento:</b> {{paciente.fecha_nacimiento}}</td>
+            <td><b>Edad:</b> {{edad}} años</td>
+        </tr>
+        <tr>
+            <td><b>Teléfono:</b> {{paciente.telefono}}</td>
+            <td><b>Email:</b> {{paciente.email}}</td>
+        </tr>
+        <tr>
+            <td><b>Peso inicial:</b> {{paciente.peso_inicial}}kg</td>
+            <td><b>Peso objetivo:</b> {{paciente.peso_objetivo}}</td>
+        </tr>
+        <tr><td><b>Altura:</b> {{paciente.altura}}m</td> {%if paciente.foto_inicial%}<td><b>Foto inicial: </b><a href="{{paciente.foto_inicial.url}}"> Abrir</td>{%endif%}</tr>
+        <tr><td><b>Enfermedades/alergias: </b> {{paciente.enfermedades}}</td></tr>
+        <tr><td><b>Medicacion/tratamiento: </b> {{paciente.medicamentos}}</td></tr>
+        <tr><td><b>Actividad física: </b> {{paciente.actividad_fisica}}</td></tr>
+    </table>
+    <br>
+    <div style="width:800px; text-align:center">
+        <button onclick="location.href='{%url 'editarpaciente' paciente.pk%}';" class="btn btn-warning" style="margin-right:30px">Editar</button><button onclick="borrarpaciente()" class="btn btn-danger">Borrar</button>
+    </div>
+
+<button type="button" id="borrar" hidden onclick="location.href='{%url 'borrarpaciente' paciente.pk%}';"></button>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<div id="mediciones" style="min-height:70px; margin-top:400px;"> </div>
+<div id="recuadro" style="margin-top:60px;">
+    <h5><img style="margin-right:5px;" src="{% static 'images/peso.png'%}" width="50px"> Datos consultas</h5>
+    <br>
+    <table id="tabla_mediciones" class="display">
+        <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Dieta</th>
+            <th>Peso</th>
+            <th>IMC</th>
+            <th>Masa muscular</th>
+            <th>Grasa visceral</th>
+            <th>Grasa subcutanea</th>
+            <th>Grasa kg</th>
+            <th>Perímetro cintura</th>
+        </tr>
+        </thead>
+        <tbody>
+        {%for medicion in paciente.paciente_mediciones.all%}
+        <tr>
+            <td><a href="{%url 'editarmedicion' medicion.pk%}">{{medicion.fecha}}</a></td>
+            <td>{%if medicion.dieta%}<a href="{%url 'ver_dieta' medicion.dieta.pk%}">{{medicion.dieta}}</a>{%endif%}</td>
+            <td>{{medicion.peso}}kg</td>
+            <td>{{medicion.imc}}</td>
+            <td>{{medicion.masa_muscular}}%</td>
+            <td>{{medicion.grasa_visceral}}%</td>
+            <td>{{medicion.grasa_subcutanea}}%</td>
+            <td>{{medicion.grasa_kg}}kg</td>
+            <td>{{medicion.perimetro_cintura}}cm</td>
+
+
+
+
+        </tr>
+        {%endfor%}
+        </tbody>
+    </table>
+        </div>
+
+
+    <div id="grafica" style="min-height:30px; margin-top:400px;"> </div>
+    <div id="recuadro" style="margin-top:60px;">
+
+        <canvas id="myChart"></canvas>
+
+
+
+</div>
+<div id="nuevamedicion" style="min-height:70px;margin-top:400px;"> </div>
+<div id="recuadro" style="margin-bottom:300px;">
+    <br>
+    <h5><img style="margin-right:5px;" src="{% static 'images/cinta.png'%}" width="50px">Nueva consulta</h5>
+    <form  method="POST">{% csrf_token %}
+        {{formmedicion}}
+        <div style="text-align:center;">
+            <br>
+            <input style="width:200px;" type="submit" class="btn btn-success" value="Añadir" name="nuevamedida">
+        </div>
+    </form>
+
+
+    <script src="{%static 'Charts js/chartloader.min.js'%}"></script>
+
+    <script>var ctx = document.getElementById('myChart').getContext('2d');
+
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
+
+    // The data for our dataset
+    data: {
+        labels: {{fechas|safe}},
+        datasets: [{
+            label: 'Variación del peso de {{paciente.nombre}}',
+            borderColor: 'rgb(255, 99, 132)',
+            data: {{pesos}}
+        },{
+            label:['peso objetivo'],
+            data: {{peso_objetivo}},
+            borderColor: 'rgb(0,255,0)',
+            backgroundColor: 'rgb(195,230,186)',
+          }
+
+        ]
+    },
+
+    // Configuration options go here
+    options: {}
+});
+</script>
+<script>
+function borrarpaciente(){
+        var r = confirm("¿Estás seguro que deseas borrar a este paciente?")
+        if (r == true) {
+            document.getElementById("borrar").onclick()
+        }
+    };
+</script>
+
+{%endblock%}
+
+

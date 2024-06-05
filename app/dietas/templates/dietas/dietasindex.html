@@ -1,0 +1,159 @@
+{%extends 'core/base.html'%}
+{%load static%}
+{%block content%}
+<style>
+    h1,h2,h3,h4,h5,h6 {
+    text-align:center;
+    }
+
+
+#recuadro {
+  margin-left: 2%;
+  margin-right: 2%;
+  width:95%;
+  padding:10px;
+  }
+
+td{
+ max-width:500px;
+
+}
+.sidenav {
+  height: 100%; /* Full-height: remove this if you want "auto" height */
+  width: 160px; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 100px; /* Stay at the top */
+  left: 0;
+  background-color: #111; /* Black */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 10px;
+}
+
+/* The navigation menu links */
+.sidenav a {
+  margin:5%;
+  margin-top:30px;
+  padding: 4px 6px 6px 16px;
+  text-decoration: none;
+  font-size: 14px;
+  color: #818181;
+  display: block;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+
+
+/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+.dataTables_wrapper {
+    position: relative;
+    clear: both;
+    *zoom: 1;
+    zoom: 1;
+    width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+}
+</style>
+<div class="sidenav">
+    <a href="#"> <img height="25" src="{%static 'images\dietasblanco.png'%}"> Lista de dietas</a>
+    <a href="{%url 'crear_dieta'%}"><img height="25" src="{%static 'images\adddietasblanco.png'%}"> Crear nueva dieta</a>
+    <a href="#platos"><img height="35" src="{%static 'images\platosblanco.png'%}"> Lista de platos</a>
+    <a href="{%url 'crear_plato'%}"><img height="35" src="{%static 'images\addplatosblanco.png'%}"> Crear nuevo Plato</a>
+    <a href="#representaciones"><img height="22" src="{%static 'images\representacionesblanco.png'%}"> Lista de representaciones de platos</a>
+    <a href="{%url 'crear_representacion'%}"><img height="22" src="{%static 'images\addrepresentacionesblanco.png'%}"> Crear nueva representación</a>
+
+</div>
+<br>
+<br>
+<div class="contenidolateral" style="margin-left:160px;">
+
+<h3 id="dietas"><img src="{% static 'images/dietas.png'%}" height="50px"> Lista de dietas</h3>
+    <table style="width:95%;" id="tabla_dietas" class="display">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+        </tr>
+        </thead>
+        <tbody>
+        {%for dieta in dietas%}
+        <tr>
+            <td><a href="{%url 'ver_dieta' dieta.pk%}">{{dieta.nombre}}</a></td>
+            <td>{{dieta.descripcion}}</td>
+        </tr>
+        {%endfor%}
+        </tbody>
+    </table>
+
+<div style="min-height:1000px;"></div>
+
+
+
+
+
+
+
+    <div id="platos" style="min-height:100px;"></div>
+    <h3><img src="{% static 'images/platos.png'%}" height="50px"> Lista de platos</h3>
+    <table style="width:95%;" id="tabla_platos" class="display">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Representación</th>
+            <th>Ingredientes</th>
+        </tr>
+        </thead>
+        <tbody>
+        {%for plato in platos%}
+        <tr>
+            <td><a href="{%url 'editar_plato' plato.pk%}">{{plato.nombre}}</a></td>
+            <td><img width="25" src="{{plato.representacion.imagen.url}}"></td>
+            <td>{{plato.ingredientes}}</td>
+        </tr>
+        {%endfor%}
+        </tbody>
+    </table>
+
+
+
+    <div style="min-height:1000px;"></div>
+
+
+
+
+
+
+
+<div id="representaciones"></div>
+    <h3><img src="{% static 'images/representaciones.png'%}" height="50px"> Lista de representaciones</h3>
+    <table style="width:95%;" id="tabla_representaciones" class="display">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Imagen</th>
+            <th>Descripción</th>
+        </tr>
+        </thead>
+        <tbody>
+        {%for representacion in representaciones%}
+        <tr>
+            <td><a href="{%url 'editar_representacion' representacion.pk%}">{{representacion.nombre}}</a></td>
+            <td><img width="50" src="{{representacion.imagen.url}}"></td>
+            <td>{{representacion.descripcion}}</td>
+        </tr>
+        {%endfor%}
+        </tbody>
+    </table>
+<br>
+    <br>
+    <br>
+    {%endblock%}

@@ -1,0 +1,39 @@
+{%extends 'core/base.html'%}
+{%load static%}
+{%block content%}
+<style>
+    h1,h2,h3,h4,h5,h6 {
+    text-align:center;
+    }
+#recuadro {
+  margin: auto;
+  width:80%;
+  padding:10px;
+  }
+</style>
+
+<h4>{{object}}</h4>
+
+<div id="recuadro">
+    <h5 id="nuevamedicion"><img style="margin-right:5px;" src="{% static 'images/cinta.png'%}" width="50px">Editar medición</h5>
+    <form  method="POST" action="">{% csrf_token %}
+        {{form}}
+        <br>
+        <br>
+        <div style="text-align:center;">
+            <br>
+            <input style="width:200px;" type="submit" class="btn btn-warning" value="Editar" name="editarmedida">
+            <button style="width:200px;" type="button" onclick="borrarmedicion()" class="btn btn-danger">Borrar</button>
+            <button type="button" id="borrarmedida" hidden onclick="location.href='{%url 'borrarmedicion' object.pk%}';"></button>
+        </div>
+    </form>
+</div>
+<script>
+function borrarmedicion(){
+        var r = confirm("¿Estás seguro que deseas borrar estas medidas?")
+        if (r == true) {
+            document.getElementById("borrarmedida").onclick()
+        }
+    };
+</script>
+{%endblock%}

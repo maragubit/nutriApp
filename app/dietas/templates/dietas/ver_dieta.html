@@ -1,0 +1,360 @@
+{%extends 'core/base.html'%}
+{%load static%}
+{%block content%}
+<style>
+h1,h2,h3,h4,h5,h6{
+text-align:center;
+
+}
+    table, th, td {
+  border: 1px solid black;
+  padding: 5px;
+}
+    th{
+    background-color:#c6eff3;
+
+    }
+    td {
+    width:200px;
+    height:150px;
+    vertical-align: middle;
+
+    }
+    h5{
+    vertical-align:middle;
+    }
+
+
+</style>
+
+<div style="width:95%; margin-left:auto;margin-right:auto">
+    <h4 style="text-align:center"><img src="{% static 'images/dietas.png'%}" height="50px"> {{dieta.nombre}}</h4>
+    <br>
+    <button class="btn btn-info" type="button" id="quitar" onclick="quitar_representaciones()"> Quitar imagenes</button><button id="poner" class="btn btn-info" type="button" style="display:none;" onclick="poner_representaciones()"> Poner imagenes</button>
+    <br>
+    <h5 style="text-align:center"> Dieta Semana 1 <button type="button" onclick="Export()"><img height="30" src="{%static 'images/printer.jpg'%}"></button> </h5>
+        <table id="tblCustomers">
+            <tr>
+                <th style="border-top: none; border-left: none; background-color:white;"><h5>{{dieta.nombre}} 1</h5></th>
+                <th>Lunes</th>
+                <th>Martes</th>
+                <th>Miércoles</th>
+                <th>Jueves</th>
+                <th>Viernes</th>
+                <th>Sábado</th>
+                <th>Domingo</th>
+            </tr>
+            <tr>
+
+            </tr>
+            <tr>
+                <td><h5>Desayuno</h5></td>
+                <td>
+                    <span title="{{object.desayuno1.ingredientes}}">{{object.desayuno1}}</span> <img class="representacion" src="{{object.desayuno1.representacion.imagen.url}}"width="20"></td>
+                <td>
+                    {%if object.desayuno2%}<span title="{{object.desayuno2.ingredientes}}"> {{object.desayuno2}}</span> <img class="representacion" src="{{object.desayuno2.representacion.imagen.url}}"width="20">{%else%}<span title="{{object.desayuno1.ingredientes}}">{{object.desayuno1}}</span> <img class="representacion" src="{{object.desayuno1.representacion.imagen.url}}"width="20"></td>{%endif%}
+                </td>
+                <td><span title="{{object.desayuno1.ingredientes}}">{{object.desayuno1}}</span> <img class="representacion" src="{{object.desayuno1.representacion.imagen.url}}"width="20"></td>
+                <td>
+                    {%if object.desayuno2%} <span title="{{object.desayuno2.ingredientes}}">{{object.desayuno2}}</span> <img class="representacion" src="{{object.desayuno2.representacion.imagen.url}}"width="20">{%else%}<span title="{{object.desayuno1.ingredientes}}">{{object.desayuno1}}</span> <img class="representacion" src="{{object.desayuno1.representacion.imagen.url}}"width="20"></td>{%endif%}</td>
+                <td><span title="{{object.desayuno1.ingredientes}}">{{object.desayuno1}}</span> <img class="representacion" src="{{object.desayuno1.representacion.imagen.url}}"width="20"></td>
+                <td><span title="{{object.desayuno1.ingredientes}}">{{object.desayuno1}}</span> <img class="representacion" src="{{object.desayuno1.representacion.imagen.url}}"width="20"></td>
+                <td>
+                    {%if object.desayuno3%}<span title="{{object.desayuno3.ingredientes}}"> {{object.desayuno3}}</span> <img class="representacion" src="{{object.desayuno3.representacion.imagen.url}}"width="20">{%else%}<span title="{{object.desayuno2.ingredientes}}">{{object.desayuno2}}</span> <img class="representacion" src="{{object.desayuno2.representacion.imagen.url}}"width="20"></td>{%endif%}
+                </td>
+            </tr>
+            <tr>
+                <td><h5>Media mañana</h5></td>
+                <td>{%if object.dia1_media_manana%}<span title="{{object.dia1_media_manana.ingredientes}}">{{object.dia1_media_manana}}</span> <img class="representacion" src="{{object.dia1_media_manana.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td>{%if object.dia2_media_manana%}<span title="{{object.dia2_media_manana.ingredientes}}">{{object.dia2_media_manana}}</span> <img class="representacion" src="{{object.dia2_media_manana.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td>{%if object.dia3_media_manana%}<span title="{{object.dia3_media_manana.ingredientes}}">{{object.dia3_media_manana}}</span> <img class="representacion" src="{{object.dia3_media_manana.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td>{%if object.dia4_media_manana%}<span title="{{object.dia4_media_manana.ingredientes}}">{{object.dia4_media_manana}}</span> <img class="representacion" src="{{object.dia4_media_manana.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td>{%if object.dia5_media_manana%}<span title="{{object.dia5_media_manana.ingredientes}}">{{object.dia5_media_manana}}</span> <img class="representacion" src="{{object.dia5_media_manana.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td>{%if object.dia6_media_manana%}<span title="{{object.dia6_media_manana.ingredientes}}">{{object.dia6_media_manana}}</span> <img class="representacion" src="{{object.dia6_media_manana.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td>{%if object.dia7_media_manana%}<span title="{{object.dia7_media_manana.ingredientes}}">{{object.dia7_media_manana}}</span> <img class="representacion" src="{{object.dia7_media_manana.representacion.imagen.url}}"width="20">{%endif%}</td>
+
+            </tr>
+            <tr>
+                <td rowspan="3"><h5>Almuerzo</h5></td>
+                <td class="almuerzo1"><span title="{{object.dia1_almuerzo1.ingredientes}}">{{object.dia1_almuerzo1}}</span> <img class="representacion" src="{{object.dia1_almuerzo1.representacion.imagen.url}}"width="20"></td>
+                <td class="almuerzo1"><span title="{{object.dia2_almuerzo1.ingredientes}}">{{object.dia2_almuerzo1}}</span> <img class="representacion" src="{{object.dia2_almuerzo1.representacion.imagen.url}}"width="20"></td>
+                <td class="almuerzo1"><span title="{{object.dia3_almuerzo1.ingredientes}}">{{object.dia3_almuerzo1}}</span> <img class="representacion" src="{{object.dia3_almuerzo1.representacion.imagen.url}}"width="20"></td>
+                <td class="almuerzo1"><span title="{{object.dia4_almuerzo1.ingredientes}}">{{object.dia4_almuerzo1}}</span> <img class="representacion" src="{{object.dia4_almuerzo1.representacion.imagen.url}}"width="20"></td>
+                <td class="almuerzo1"><span title="{{object.dia5_almuerzo1.ingredientes}}">{{object.dia5_almuerzo1}}</span> <img class="representacion" src="{{object.dia5_almuerzo1.representacion.imagen.url}}"width="20"></td>
+                <td class="almuerzo1"><span title="{{object.dia6_almuerzo1.ingredientes}}">{{object.dia6_almuerzo1}}</span> <img class="representacion" src="{{object.dia6_almuerzo1.representacion.imagen.url}}"width="20"></td>
+                <td class="almuerzo1"><span title="{{object.dia7_almuerzo1.ingredientes}}">{{object.dia7_almuerzo1}}</span> <img class="representacion" src="{{object.dia7_almuerzo1.representacion.imagen.url}}"width="20"></td>
+
+            </tr>
+            <tr>
+
+                <td class="almuerzo2">{%if object.dia1_amuerzo2 %}<span title="{{object.dia1_almuerzo2.ingredientes}}">{{object.dia1_almuerzo2}}</span> <img class="representacion" src="{{object.dia1_almuerzo2.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td class="almuerzo2">{%if object.dia2_amuerzo2 %}<span title="{{object.dia2_almuerzo2.ingredientes}}">{{object.dia2_almuerzo2}}</span> <img class="representacion" src="{{object.dia2_almuerzo2.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td class="almuerzo2">{%if object.dia3_amuerzo2 %}<span title="{{object.dia3_almuerzo2.ingredientes}}">{{object.dia3_almuerzo2}}</span> <img class="representacion" src="{{object.dia3_almuerzo2.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td class="almuerzo2">{%if object.dia4_amuerzo2 %}<span title="{{object.dia4_almuerzo2.ingredientes}}">{{object.dia4_almuerzo2}}</span> <img class="representacion" src="{{object.dia4_almuerzo2.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td class="almuerzo2">{%if object.dia5_amuerzo2 %}<span title="{{object.dia5_almuerzo2.ingredientes}}">{{object.dia5_almuerzo2}}</span> <img class="representacion" src="{{object.dia5_almuerzo2.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td class="almuerzo2">{%if object.dia6_amuerzo2 %}<span title="{{object.dia6_almuerzo2.ingredientes}}">{{object.dia6_almuerzo2}}</span> <img class="representacion" src="{{object.dia6_almuerzo2.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td class="almuerzo2">{%if object.dia7_amuerzo2 %}<span title="{{object.dia7_almuerzo2.ingredientes}}">{{object.dia7_almuerzo2}}</span> <img class="representacion" src="{{object.dia7_almuerzo2.representacion.imagen.url}}"width="20">{%endif%}</td>
+
+            </tr>
+            <tr>
+
+                <td class="postrealmuerzo">{%if object.dia1_postre_almuerzo %}<span title="{{object.dia1_postre_almuerzo.ingredientes}}">{{object.dia1_postre_almuerzo}}</span>  <img class="representacion" src="{{object.dia1_postre_almuerzo.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td class="postrealmuerzo">{%if object.dia2_postre_almuerzo %}<span title="{{object.dia2_postre_almuerzo.ingredientes}}">{{object.dia2_postre_almuerzo}}</span>  <img class="representacion" src="{{object.dia2_postre_almuerzo.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td class="postrealmuerzo">{%if object.dia3_postre_almuerzo %}<span title="{{object.dia3_postre_almuerzo.ingredientes}}">{{object.dia3_postre_almuerzo}}</span>  <img class="representacion" src="{{object.dia3_postre_almuerzo.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td class="postrealmuerzo">{%if object.dia4_postre_almuerzo %}<span title="{{object.dia4_postre_almuerzo.ingredientes}}">{{object.dia4_postre_almuerzo}}</span>  <img class="representacion" src="{{object.dia4_postre_almuerzo.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td class="postrealmuerzo">{%if object.dia5_postre_almuerzo %}<span title="{{object.dia5_postre_almuerzo.ingredientes}}">{{object.dia5_postre_almuerzo}}</span>  <img class="representacion" src="{{object.dia5_postre_almuerzo.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td class="postrealmuerzo">{%if object.dia6_postre_almuerzo %}<span title="{{object.dia6_postre_almuerzo.ingredientes}}">{{object.dia6_postre_almuerzo}}</span>  <img class="representacion" src="{{object.dia6_postre_almuerzo.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td class="postrealmuerzo">{%if object.dia7_postre_almuerzo %}<span title="{{object.dia7_postre_almuerzo.ingredientes}}">{{object.dia7_postre_almuerzo}}</span>  <img class="representacion" src="{{object.dia7_postre_almuerzo.representacion.imagen.url}}"width="20">{%endif%}</td>
+
+            </tr>
+            <tr>
+                <td><h5>Merienda</h5></td>
+                <td>{%if object.dia1_merienda %}<span title="{{object.dia1_merienda.ingredientes}}">{{object.dia1_merienda}}</span>  <img class="representacion" src="{{object.dia1_merienda.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td>{%if object.dia2_merienda %}<span title="{{object.dia2_merienda.ingredientes}}">{{object.dia2_merienda}}</span>  <img class="representacion" src="{{object.dia2_merienda.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td>{%if object.dia3_merienda %}<span title="{{object.dia3_merienda.ingredientes}}">{{object.dia3_merienda}}</span>  <img class="representacion" src="{{object.dia3_merienda.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td>{%if object.dia4_merienda %}<span title="{{object.dia4_merienda.ingredientes}}">{{object.dia4_merienda}}</span>  <img class="representacion" src="{{object.dia4_merienda.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td>{%if object.dia5_merienda %}<span title="{{object.dia5_merienda.ingredientes}}">{{object.dia5_merienda}}</span>  <img class="representacion" src="{{object.dia5_merienda.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td>{%if object.dia6_merienda %}<span title="{{object.dia6_merienda.ingredientes}}">{{object.dia6_merienda}}</span>  <img class="representacion" src="{{object.dia6_merienda.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td>{%if object.dia7_merienda %}<span title="{{object.dia7_merienda.ingredientes}}">{{object.dia7_merienda}}</span>  <img class="representacion" src="{{object.dia7_merienda.representacion.imagen.url}}"width="20">{%endif%}</td>
+
+            </tr>
+
+            <tr>
+                <td rowspan="3"><h5>Cena</h5></td>
+                <td><span title="{{object.dia1_cena1.ingredientes}}">{{object.dia1_cena1}}</span> <img class="representacion" src="{{object.dia1_cena1.representacion.imagen.url}}"width="20"></td>
+                <td><span title="{{object.dia2_cena1.ingredientes}}">{{object.dia2_cena1}}</span> <img class="representacion" src="{{object.dia2_cena1.representacion.imagen.url}}"width="20"></td>
+                <td><span title="{{object.dia3_cena1.ingredientes}}">{{object.dia3_cena1}}</span> <img class="representacion" src="{{object.dia3_cena1.representacion.imagen.url}}"width="20"></td>
+                <td><span title="{{object.dia4_cena1.ingredientes}}">{{object.dia4_cena1}}</span> <img class="representacion" src="{{object.dia4_cena1.representacion.imagen.url}}"width="20"></td>
+                <td><span title="{{object.dia5_cena1.ingredientes}}">{{object.dia5_cena1}}</span> <img class="representacion" src="{{object.dia5_cena1.representacion.imagen.url}}"width="20"></td>
+                <td><span title="{{object.dia6_cena1.ingredientes}}">{{object.dia6_cena1}}</span> <img class="representacion" src="{{object.dia6_cena1.representacion.imagen.url}}"width="20"></td>
+                <td><span title="{{object.dia7_cena1.ingredientes}}">{{object.dia7_cena1}}</span> <img class="representacion" src="{{object.dia7_cena1.representacion.imagen.url}}"width="20"></td>
+
+            </tr>
+            <tr>
+
+                <td>{%if object.dia1_cena2%}<span title="{{object.dia1_cena2.ingredientes}}">{{object.dia1_cena2}}</span>  <img class="representacion" src="{{object.dia1_cena2.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td>{%if object.dia2_cena2%}<span title="{{object.dia2_cena2.ingredientes}}">{{object.dia2_cena2}}</span>  <img class="representacion" src="{{object.dia2_cena2.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td>{%if object.dia3_cena2%}<span title="{{object.dia3_cena2.ingredientes}}">{{object.dia3_cena2}}</span>  <img class="representacion" src="{{object.dia3_cena2.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td>{%if object.dia4_cena2%}<span title="{{object.dia4_cena2.ingredientes}}">{{object.dia4_cena2}}</span>  <img class="representacion" src="{{object.dia4_cena2.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td>{%if object.dia5_cena2%}<span title="{{object.dia5_cena2.ingredientes}}">{{object.dia5_cena2}}</span>  <img class="representacion" src="{{object.dia5_cena2.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td>{%if object.dia6_cena2%}<span title="{{object.dia6_cena2.ingredientes}}">{{object.dia6_cena2}}</span>  <img class="representacion" src="{{object.dia6_cena2.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td>{%if object.dia7_cena2%}<span title="{{object.dia7_cena2.ingredientes}}">{{object.dia7_cena2}}</span>  <img class="representacion" src="{{object.dia7_cena2.representacion.imagen.url}}"width="20">{%endif%}</td>
+
+            </tr>
+            <tr>
+
+                <td>{%if object.dia1_postre_cena%}<span title="{{object.dia1_postre_cena.ingredientes}}">{{object.dia1_postre_cena}}</span> <img class="representacion" src="{{object.dia1_postre_cena.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td>{%if object.dia2_postre_cena%}<span title="{{object.dia1_postre_cena.ingredientes}}">{{object.dia2_postre_cena}}</span>  <img class="representacion" src="{{object.dia1_postre_cena.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td>{%if object.dia3_postre_cena%}<span title="{{object.dia1_postre_cena.ingredientes}}">{{object.dia3_postre_cena}}</span>  <img class="representacion" src="{{object.dia1_postre_cena.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td>{%if object.dia4_postre_cena%}<span title="{{object.dia1_postre_cena.ingredientes}}">{{object.dia4_postre_cena}}</span>  <img class="representacion" src="{{object.dia1_postre_cena.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td>{%if object.dia5_postre_cena%}<span title="{{object.dia1_postre_cena.ingredientes}}">{{object.dia5_postre_cena}}</span>  <img class="representacion" src="{{object.dia1_postre_cena.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td>{%if object.dia6_postre_cena%}<span title="{{object.dia1_postre_cena.ingredientes}}">{{object.dia6_postre_cena}}</span>  <img class="representacion" src="{{object.dia1_postre_cena.representacion.imagen.url}}"width="20">{%endif%}</td>
+                <td>{%if object.dia7_postre_cena%}<span title="{{object.dia1_postre_cena.ingredientes}}">{{object.dia7_postre_cena}}</span>  <img class="representacion" src="{{object.dia1_postre_cena.representacion.imagen.url}}"width="20">{%endif%}</td>
+
+            </tr>
+        </table>
+        <br>
+    <br>
+    <br>
+        <h5>Dieta Semana 2 <button type="button" onclick="Export2()"><img height="30" src="{%static 'images/printer.jpg'%}"></button></h5>
+    <table id="tblCustomers2">
+        <tr>
+            <th style="border-top: none; border-left: none; background-color:white;"><h5>{{dieta.nombre}} 2</h5></th>
+            <th>Lunes</th>
+            <th>Martes</th>
+            <th>Miércoles</th>
+            <th>Jueves</th>
+            <th>Viernes</th>
+            <th>Sábado</th>
+            <th>Domingo</th>
+        </tr>
+        <tr>
+
+        </tr>
+        <tr>
+            <td><h5>Desayuno</h5></td>
+            <td>
+                <span title="{{object.desayuno1.ingredientes}}">{{object.desayuno1}}</span> <img class="representacion" src="{{object.desayuno1.representacion.imagen.url}}"width="20"></td>
+            <td>
+                {%if object.desayuno2%}<span title="{{object.desayuno2.ingredientes}}"> {{object.desayuno2}}</span> <img class="representacion" src="{{object.desayuno2.representacion.imagen.url}}"width="20">{%else%}<span title="{{object.desayuno1.ingredientes}}">{{object.desayuno1}}</span> <img class="representacion" src="{{object.desayuno1.representacion.imagen.url}}"width="20"></td>{%endif%}
+            </td>
+            <td><span title="{{object.desayuno1.ingredientes}}">{{object.desayuno1}}</span> <img class="representacion" src="{{object.desayuno1.representacion.imagen.url}}"width="20"></td>
+            <td>
+                {%if object.desayuno2%} <span title="{{object.desayuno2.ingredientes}}">{{object.desayuno2}}</span> <img class="representacion" src="{{object.desayuno2.representacion.imagen.url}}"width="20">{%else%}<span title="{{object.desayuno1.ingredientes}}">{{object.desayuno1}}</span> <img class="representacion" src="{{object.desayuno1.representacion.imagen.url}}"width="20"></td>{%endif%}</td>
+            <td><span title="{{object.desayuno1.ingredientes}}">{{object.desayuno1}}</span> <img class="representacion" src="{{object.desayuno1.representacion.imagen.url}}"width="20"></td>
+            <td><span title="{{object.desayuno1.ingredientes}}">{{object.desayuno1}}</span> <img class="representacion" src="{{object.desayuno1.representacion.imagen.url}}"width="20"></td>
+            <td>
+                {%if object.desayuno3%}<span title="{{object.desayuno3.ingredientes}}"> {{object.desayuno3}}</span> <img class="representacion" src="{{object.desayuno3.representacion.imagen.url}}"width="20">{%else%}<span title="{{object.desayuno2.ingredientes}}">{{object.desayuno2}}</span> <img class="representacion" src="{{object.desayuno2.representacion.imagen.url}}"width="20"></td>{%endif%}
+            </td>
+        </tr>
+        <tr>
+            <td><h5>Media mañana</h5></td>
+            <td>{%if object.dia1b_media_manana%}<span title="{{object.dia1b_media_manana.ingredientes}}">{{object.dia1b_media_manana}}</span> <img class="representacion" src="{{object.dia1b_media_manana.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia2b_media_manana%}<span title="{{object.dia2b_media_manana.ingredientes}}">{{object.dia2b_media_manana}}</span> <img class="representacion" src="{{object.dia2b_media_manana.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia3b_media_manana%}<span title="{{object.dia3b_media_manana.ingredientes}}">{{object.dia3b_media_manana}}</span> <img class="representacion" src="{{object.dia3b_media_manana.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia4b_media_manana%}<span title="{{object.dia4b_media_manana.ingredientes}}">{{object.dia4b_media_manana}}</span> <img class="representacion" src="{{object.dia4b_media_manana.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia5b_media_manana%}<span title="{{object.dia5b_media_manana.ingredientes}}">{{object.dia5b_media_manana}}</span> <img class="representacion" src="{{object.dia5b_media_manana.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia6b_media_manana%}<span title="{{object.dia6b_media_manana.ingredientes}}">{{object.dia6b_media_manana}}</span> <img class="representacion" src="{{object.dia6b_media_manana.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia7b_media_manana%}<span title="{{object.dia7b_media_manana.ingredientes}}">{{object.dia7b_media_manana}}</span> <img class="representacion" src="{{object.dia7b_media_manana.representacion.imagen.url}}"width="20">{%endif%}</td>
+
+        </tr>
+        <tr>
+            <td rowspan="3"><h5>Almuerzo</h5></td>
+            <td ><span title="{{object.dia1b_almuerzo1.ingredientes}}">{{object.dia1b_almuerzo1}}</span> <img class="representacion" src="{{object.dia1b_almuerzo1.representacion.imagen.url}}"width="20"></td>
+            <td><span title="{{object.dia2b_almuerzo1.ingredientes}}">{{object.dia2b_almuerzo1}}</span> <img class="representacion" src="{{object.dia2b_almuerzo1.representacion.imagen.url}}"width="20"></td>
+            <td><span title="{{object.dia3b_almuerzo1.ingredientes}}">{{object.dia3b_almuerzo1}}</span> <img class="representacion" src="{{object.dia3b_almuerzo1.representacion.imagen.url}}"width="20"></td>
+            <td><span title="{{object.dia4b_almuerzo1.ingredientes}}">{{object.dia4b_almuerzo1}}</span> <img class="representacion" src="{{object.dia4b_almuerzo1.representacion.imagen.url}}"width="20"></td>
+            <td><span title="{{object.dia5b_almuerzo1.ingredientes}}">{{object.dia5b_almuerzo1}}</span> <img class="representacion" src="{{object.dia5b_almuerzo1.representacion.imagen.url}}"width="20"></td>
+            <td><span title="{{object.dia6b_almuerzo1.ingredientes}}">{{object.dia6b_almuerzo1}}</span> <img class="representacion" src="{{object.dia6b_almuerzo1.representacion.imagen.url}}"width="20"></td>
+            <td><span title="{{object.dia7b_almuerzo1.ingredientes}}">{{object.dia7b_almuerzo1}}</span> <img class="representacion" src="{{object.dia7b_almuerzo1.representacion.imagen.url}}"width="20"></td>
+
+        </tr>
+        <tr>
+
+            <td>{%if object.dia1b_almuerzo2%}<span title="{{object.dia1b_almuerzo2.ingredientes}}">{{object.dia1b_almuerzo2}}</span> <img class="representacion" src="{{object.dia1b_almuerzo2.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia2b_almuerzo2%}<span title="{{object.dia2b_almuerzo2.ingredientes}}">{{object.dia2b_almuerzo2}}</span> <img class="representacion" src="{{object.dia2b_almuerzo2.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia3b_almuerzo2%}<span title="{{object.dia3b_almuerzo2.ingredientes}}">{{object.dia3b_almuerzo2}}</span> <img class="representacion" src="{{object.dia3b_almuerzo2.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia4b_almuerzo2%}<span title="{{object.dia4b_almuerzo2.ingredientes}}">{{object.dia4b_almuerzo2}}</span> <img class="representacion" src="{{object.dia4b_almuerzo2.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia5b_almuerzo2%}<span title="{{object.dia5b_almuerzo2.ingredientes}}">{{object.dia5b_almuerzo2}}</span> <img class="representacion" src="{{object.dia5b_almuerzo2.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia6b_almuerzo2%}<span title="{{object.dia6b_almuerzo2.ingredientes}}">{{object.dia6b_almuerzo2}}</span> <img class="representacion" src="{{object.dia6b_almuerzo2.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia7b_almuerzo2%}<span title="{{object.dia7b_almuerzo2.ingredientes}}">{{object.dia7b_almuerzo2}}</span> <img class="representacion" src="{{object.dia7b_almuerzo2.representacion.imagen.url}}"width="20">{%endif%}</td>
+
+        </tr>
+        <tr>
+
+            <td>{%if object.dia1b_postre_almuerzo%}<span title="{{object.dia1b_postre_almuerzo.ingredientes}}">{{object.dia1b_postre_almuerzo}}</span>  <img class="representacion" src="{{object.dia1b_postre_almuerzo.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia2b_postre_almuerzo%}<span title="{{object.dia1b_postre_almuerzo.ingredientes}}">{{object.dia2b_postre_almuerzo}}</span>  <img class="representacion" src="{{object.dia2b_postre_almuerzo.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia3b_postre_almuerzo%}<span title="{{object.dia1b_postre_almuerzo.ingredientes}}">{{object.dia3b_postre_almuerzo}}</span>  <img class="representacion" src="{{object.dia3b_postre_almuerzo.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia4b_postre_almuerzo%}<span title="{{object.dia1b_postre_almuerzo.ingredientes}}">{{object.dia4b_postre_almuerzo}}</span>  <img class="representacion" src="{{object.dia4b_postre_almuerzo.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia5b_postre_almuerzo%}<span title="{{object.dia1b_postre_almuerzo.ingredientes}}">{{object.dia5b_postre_almuerzo}}</span>  <img class="representacion" src="{{object.dia5b_postre_almuerzo.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia6b_postre_almuerzo%}<span title="{{object.dia1b_postre_almuerzo.ingredientes}}">{{object.dia6b_postre_almuerzo}}</span>  <img class="representacion" src="{{object.dia6b_postre_almuerzo.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia7b_postre_almuerzo%}<span title="{{object.dia1b_postre_almuerzo.ingredientes}}">{{object.dia7b_postre_almuerzo}}</span>  <img class="representacion" src="{{object.dia7b_postre_almuerzo.representacion.imagen.url}}"width="20">{%endif%}</td>
+
+        </tr>
+        <tr>
+            <td><h5>Merienda</h5></td>
+            <td>{%if object.dia1b_merienda%}<span title="{{object.dia1b_merienda.ingredientes}}">{{object.dia1b_merienda}}</span>  <img class="representacion" src="{{object.dia1b_merienda.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia2b_merienda%}<span title="{{object.dia2b_merienda.ingredientes}}">{{object.dia2b_merienda}}</span>  <img class="representacion" src="{{object.dia2b_merienda.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia3b_merienda%}<span title="{{object.dia3b_merienda.ingredientes}}">{{object.dia3b_merienda}}</span>  <img class="representacion" src="{{object.dia3b_merienda.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia4b_merienda%}<span title="{{object.dia4b_merienda.ingredientes}}">{{object.dia4b_merienda}}</span>  <img class="representacion" src="{{object.dia4b_merienda.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia5b_merienda%}<span title="{{object.dia5b_merienda.ingredientes}}">{{object.dia5b_merienda}}</span>  <img class="representacion" src="{{object.dia5b_merienda.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia6b_merienda%}<span title="{{object.dia6b_merienda.ingredientes}}">{{object.dia6b_merienda}}</span>  <img class="representacion" src="{{object.dia6b_merienda.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia7b_merienda%}<span title="{{object.dia7b_merienda.ingredientes}}">{{object.dia7b_merienda}}</span>  <img class="representacion" src="{{object.dia7b_merienda.representacion.imagen.url}}"width="20">{%endif%}</td>
+
+        </tr>
+
+        <tr>
+            <td rowspan="3"><h5>Cena</h5></td>
+            <td><span title="{{object.dia1b_cena1.ingredientes}}">{{object.dia1b_cena1}}</span> <img class="representacion" src="{{object.dia1b_cena1.representacion.imagen.url}}"width="20"></td>
+            <td><span title="{{object.dia2b_cena1.ingredientes}}">{{object.dia2b_cena1}}</span>  <img class="representacion" src="{{object.dia2b_cena1.representacion.imagen.url}}"width="20"></td>
+            <td><span title="{{object.dia3b_cena1.ingredientes}}">{{object.dia3b_cena1}}</span>  <img class="representacion" src="{{object.dia3b_cena1.representacion.imagen.url}}"width="20"></td>
+            <td><span title="{{object.dia4b_cena1.ingredientes}}">{{object.dia4b_cena1}}</span>  <img class="representacion" src="{{object.dia4b_cena1.representacion.imagen.url}}"width="20"></td>
+            <td><span title="{{object.dia5b_cena1.ingredientes}}">{{object.dia5b_cena1}}</span>  <img class="representacion" src="{{object.dia5b_cena1.representacion.imagen.url}}"width="20"></td>
+            <td><span title="{{object.dia6b_cena1.ingredientes}}">{{object.dia6b_cena1}}</span>  <img class="representacion" src="{{object.dia6b_cena1.representacion.imagen.url}}"width="20"></td>
+            <td><span title="{{object.dia7b_cena1.ingredientes}}">{{object.dia7b_cena1}}</span>  <img class="representacion" src="{{object.dia7b_cena1.representacion.imagen.url}}"width="20"></td>
+
+        </tr>
+        <tr>
+
+            <td>{%if object.dia1b_cena2%}<span title="{{object.dia1b_cena2.ingredientes}}">{{object.dia1b_cena2}}</span>  <img class="representacion" src="{{object.dia1b_cena2.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia2b_cena2%}<span title="{{object.dia2b_cena2.ingredientes}}">{{object.dia2b_cena2}}</span>  <img class="representacion" src="{{object.dia2b_cena2.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia3b_cena2%}<span title="{{object.dia3b_cena2.ingredientes}}">{{object.dia3b_cena2}}</span>  <img class="representacion" src="{{object.dia3b_cena2.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia4b_cena2%}<span title="{{object.dia4b_cena2.ingredientes}}">{{object.dia4b_cena2}}</span>  <img class="representacion" src="{{object.dia4b_cena2.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia5b_cena2%}<span title="{{object.dia5b_cena2.ingredientes}}">{{object.dia5b_cena2}}</span>  <img class="representacion" src="{{object.dia5b_cena2.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia6b_cena2%}<span title="{{object.dia6b_cena2.ingredientes}}">{{object.dia6b_cena2}}</span>  <img class="representacion" src="{{object.dia6b_cena2.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia7b_cena2%}<span title="{{object.dia7b_cena2.ingredientes}}">{{object.dia7b_cena2}}</span>  <img class="representacion" src="{{object.dia7b_cena2.representacion.imagen.url}}"width="20">{%endif%}</td>
+
+        </tr>
+        <tr>
+
+            <td>{%if object.dia1b_postre_cena%}<span title="{{object.dia1b_postre_cena.ingredientes}}">{{object.dia1b_postre_cena}}</span> <img class="representacion" src="{{object.dia1b_postre_cena.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia2b_postre_cena%}<span title="{{object.dia2b_postre_cena.ingredientes}}">{{object.dia2b_postre_cena}}</span> <img class="representacion" src="{{object.dia2b_postre_cena.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia3b_postre_cena%}<span title="{{object.dia3b_postre_cena.ingredientes}}">{{object.dia3b_postre_cena}}</span> <img class="representacion" src="{{object.dia3b_postre_cena.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia4b_postre_cena%}<span title="{{object.dia4b_postre_cena.ingredientes}}">{{object.dia4b_postre_cena}}</span> <img class="representacion" src="{{object.dia4b_postre_cena.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia5b_postre_cena%}<span title="{{object.dia5b_postre_cena.ingredientes}}">{{object.dia5b_postre_cena}}</span> <img class="representacion" src="{{object.dia5b_postre_cena.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia6b_postre_cena%}<span title="{{object.dia6b_postre_cena.ingredientes}}">{{object.dia6b_postre_cena}}</span> <img class="representacion" src="{{object.dia6b_postre_cena.representacion.imagen.url}}"width="20">{%endif%}</td>
+            <td>{%if object.dia7b_postre_cena%}<span title="{{object.dia7b_postre_cena.ingredientes}}">{{object.dia7b_postre_cena}}</span> <img class="representacion" src="{{object.dia7b_postre_cena.representacion.imagen.url}}"width="20">{%endif%}</td>
+
+        </tr>
+    </table>
+        <br>
+        <p style="text-align:center"><span style="font-size: larger;"><b>Descripción: </b></span>{{object.descripcion}}</p>
+
+        <div style="text-align:center">
+            <br>
+            <button style="width:30%" type="button" class="btn btn-success" onclick="location.href='{%url 'crearnuevadeotra' dieta.pk%}';">Crear nueva a raíz de esta dieta </button>
+            <button style="width:30%" type="button" class="btn btn-warning" onclick="location.href='{%url 'editar_dieta' dieta.pk%}';">Ir a editar dieta </button>
+        </div>
+    <br>
+    <br>
+    <br>
+</div>
+<script type="text/javascript" src="{% static 'pdfmake/pdfmake.min.js'%}"></script>
+<script type="text/javascript" src="{% static 'pdfmake/pdfmake.js.maps'%}"></script>
+<script type="text/javascript" src="{% static 'pdfmake/vsf_fonts.js'%}"></script>
+<script type="text/javascript" src="{% static 'pdfmake/canvas.min.js'%}"></script>
+<script type="text/javascript">
+        function Export() {
+            html2canvas(document.getElementById('tblCustomers'), {
+                onrendered: function (canvas) {
+                    var data = canvas.toDataURL();
+                    var docDefinition = {
+                        pageOrientation: 'landscape',
+                        content: [{
+                            image: data,
+                            width: 750,
+                            height:500
+                        }]
+                    };
+                    pdfMake.createPdf(docDefinition).print();
+                }
+            });
+        }
+    </script>
+
+<script type="text/javascript">
+        function Export2() {
+            html2canvas(document.getElementById('tblCustomers2'), {
+                onrendered: function (canvas) {
+                    var data = canvas.toDataURL();
+                    var docDefinition = {
+                        pageOrientation: 'landscape',
+                        content: [{
+                            image: data,
+                            width: 750,
+                            height:500
+                        }]
+                    };
+                    pdfMake.createPdf(docDefinition).print();
+                }
+            });
+        }
+    </script>
+<script>
+    function quitar_representaciones(){
+        var representaciones = document.getElementsByClassName('representacion');
+        var element;
+        for (element of representaciones){
+            element.style.display='none';
+            };
+
+        document.getElementById('quitar').style.display='none';
+        document.getElementById('poner').style.display='block';
+
+        };
+
+
+
+    function poner_representaciones(){
+        var representaciones = document.getElementsByClassName('representacion');
+        var element;
+        for (element of representaciones){
+            element.style.display='inline-block';
+            };
+
+        document.getElementById('quitar').style.display='block';
+        document.getElementById('poner').style.display='none';
+
+        };
+</script>
+{%endblock%}
